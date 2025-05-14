@@ -110,7 +110,7 @@ public class Main {
         List<Session> sessions = new ArrayList<>();
 
         sessions.add(new Session(1L, "AI and the Future", "Dr. John Doe", "Tech Innovations", Status.NEW, Type.ONLINE, LocalDate.of(2025, 6, 15), LocalTime.of(10, 0), LocalTime.of(12, 0), 1L, 1L, 1L));
-        sessions.add(new Session(2L, "Blockchain Basics", "Alice Smith", "Blockchain Experts", Status.NEW, Type.ONLINE, LocalDate.of(2025, 6, 16), LocalTime.of(13, 0), LocalTime.of(15, 0), 2L, 2L, 2L));
+        sessions.add(new Session(2L, "Blockchain Basics", "Alice Smith", "Blockchain Experts", Status.ONGOING, Type.ONLINE, LocalDate.of(2025, 6, 16), LocalTime.of(13, 0), LocalTime.of(15, 0), 2L, 2L, 2L));
         sessions.add(new Session(3L, "Cybersecurity Trends", "Mark Johnson", "CyberSecure Ltd.", Status.NEW, Type.ONLINE, LocalDate.of(2025, 6, 17), LocalTime.of(9, 0), LocalTime.of(11, 0), 3L, 3L, 3L));
         sessions.add(new Session(4L, "Digital Marketing", "Sara Williams", "Marketing Pro", Status.ENDED, Type.ONLINE, LocalDate.of(2025, 6, 18), LocalTime.of(11, 0), LocalTime.of(13, 0), 10L, 4L, 4L));
         sessions.add(new Session(5L, "Cloud Computing", "Tom Brown", "CloudTech Solutions", Status.ONGOING, Type.PHYSICAL, LocalDate.of(2025, 6, 19), LocalTime.of(14, 0), LocalTime.of(16, 0), 15L, 5L, 5L));
@@ -118,7 +118,7 @@ public class Main {
         sessions.add(new Session(7L, "Data Science for Beginners", "Michael Lee", "DataX Labs", Status.NEW, Type.ONLINE, LocalDate.of(2025, 6, 21), LocalTime.of(13, 30), LocalTime.of(15, 30), 7L, 7L, 7L));
         sessions.add(new Session(8L, "Tech Innovations in Healthcare", "Emma Harris", "MedTech Conference", Status.ONGOING, Type.ONLINE, LocalDate.of(2025, 6, 22), LocalTime.of(10, 0), LocalTime.of(12, 0), 4L, 8L, 8L));
         sessions.add(new Session(9L, "Ethical Hacking", "Robert Clark", "HackSecure", Status.NEW, Type.ONLINE, LocalDate.of(2025, 6, 23), LocalTime.of(15, 0), LocalTime.of(17, 0), 19L, 9L, 9L));
-        sessions.add(new Session(10L, "Introduction to Quantum Computing", "Sophia Martinez", "Quantum Future", Status.NEW, Type.ONLINE, LocalDate.of(2025, 6, 24), LocalTime.of(9, 0), LocalTime.of(11, 0), 17L, 6L, 10L));
+        sessions.add(new Session(10L, "Introduction to Quantum Computing", "Sophia Martinez", "Quantum Future", Status.ENDED, Type.ONLINE, LocalDate.of(2025, 6, 24), LocalTime.of(9, 0), LocalTime.of(11, 0), 17L, 6L, 10L));
 
         insertData.insertSession(sessions);
         for (Session session : sessions) {
@@ -126,11 +126,12 @@ public class Main {
         }
 
         // it depends on many to many relationship
-        Random rand = new Random();
-        for (int participantId = 1; participantId <= 10; participantId++) {
-            for (int sessionId = 1; sessionId <= 10; sessionId++) {
-//                if (rand.nextBoolean())
-//                    continue;
+        for (int sessionId = 1; sessionId <= 10; sessionId++) {
+            Session session = sessions.get(sessionId - 1);
+            if (session.getStatus() == Status.NEW)
+                continue;
+            for (int participantId = 1; participantId <= 50; participantId++) {
+
                 Attendance ps = new Attendance(participantId, sessionId);
                 insertData.insertAttendance(ps);
             }
