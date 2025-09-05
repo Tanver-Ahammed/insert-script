@@ -97,8 +97,8 @@ public class InsertData {
     }
 
     public void insertAttendance(Attendance attendance) throws SQLException {
-        String sql = "INSERT INTO attendance (participant_id, session_id)" +
-                "VALUES (?, ?)";
+        String sql = "INSERT INTO attendance (participant_id, session_id, attendance_type, attendance_marked_at)" +
+                "VALUES (?, ?, ?, ?)";
         PreparedStatement stmt = null;
         Connection conn = null;
         try {
@@ -106,6 +106,8 @@ public class InsertData {
             stmt = conn.prepareStatement(sql);
             stmt.setLong(1, attendance.getParticipantId());
             stmt.setLong(2, attendance.getSessionId());
+            stmt.setString(3, attendance.getAttendanceType());
+            stmt.setTimestamp(4, java.sql.Timestamp.valueOf(attendance.getAttendanceMarkedAt()));
             stmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
